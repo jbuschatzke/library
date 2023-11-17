@@ -2,3 +2,39 @@
     margin: 0;
     padding: 0;
 }
+
+
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#new-book{
+    border: none;
+    font-size: 24px;
+    background-color: #701a14;
+    color: #edfcee;
+    border-radius: 10px;
+    padding: 6px;
+}
+
+#new-book:hover{
+    background-color: #851e17;
+}
+
+#new-book:active{
+    background-color: #a8271e;
+}
+
+
+.book-card{
+    background-color: #d9d7d7;
+    border-radius: 24px;
+    padding: 12px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.book-card li {
+    list-style-type: none;
+}
