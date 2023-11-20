@@ -1,17 +1,18 @@
 const myLibrary = [
     {
-        "title": "Good Omens",
-        "author": "Terry Pratchett and Neil Gaiman",
-        "pages": 400,
-        "read": "not read yet",
+        "Title": "Good Omens",
+        "Author": "Terry Pratchett and Neil Gaiman",
+        "Pages": 400,
+        "Read": "not read yet",
     }
     ,
     {
-        "title": "Twilight",
-        "author": "Stephenie Meyer",
-        "pages": 544,
-        "read": "read",
+        "Title": "Twilight",
+        "Author": "Stephenie Meyer",
+        "Pages": 544,
+        "Read": "read",
     }
+    
 ];
 
 const cardContainer = document.getElementById("card-container");
@@ -51,13 +52,20 @@ function Book (title, author, pages, read) {
     };
 };
 
+const bookBtn = document.getElementById("new-book");
+const dialog = document.querySelector("dialog");
+const closeBtn = document.querySelector("dialog button");
+
+bookBtn.addEventListener("click", function(){
+    dialog.showModal();
+});
+
+closeBtn.addEventListener("click", () => {
+    dialog.close();
+});
 
 function addBookToLibrary() {
-    const bookBtn = document.getElementById("new-book");
-    bookBtn.addEventListener("onclick", function(){
 
-    });
-    myLibrary.push(theHobbit);
 };
 
 const theHobbit = new Book ("The Hobbit", "J.R.R. Tolkien", "295", "not read yet");
