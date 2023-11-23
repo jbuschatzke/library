@@ -44,6 +44,7 @@ function displayLibrary()
     }
 };
 
+//Constructor
 function Book (title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -65,21 +66,24 @@ const closeBtn = document.getElementById("close-button");
 const submitBtn = document.getElementById("submit-button");
 const radioBtnYes = document.getElementById("read-yes");
 const radioBtnNo = document.getElementById("read-no");
+const bookForm = document.getElementById("book-form");
 
 bookBtn.addEventListener("click", () => {
     dialog.showModal();
 });
 
-closeBtn.addEventListener("click", () => {
+closeBtn.addEventListener("click", (event) => {
     dialog.close();
+    bookForm.reset();
+    event.preventDefault();
 });
 
 submitBtn.addEventListener("click", (event) => {
-    console.log(title.value);
     addBookToLibrary();
     dialog.close();
     document.querySelectorAll(".book-card").forEach(el => el.remove());
     displayLibrary();
+    bookForm.reset();
     event.preventDefault();
 });
 
