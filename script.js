@@ -17,6 +17,9 @@ const myLibrary = [
 
 const cardContainer = document.getElementById("card-container");
 
+//create a Remove Entry button
+
+
 //Iterate through each object of myLibrary
 
 function displayLibrary() 
@@ -41,22 +44,32 @@ function displayLibrary()
 
     //attach list to the previously created bookCard div
     bookCard.appendChild(list);
-    }
+    //create Remove Entry button that will target it's closest div.book-card to delete
+    
+    const removeEntryButton = document.createElement("button");
+    removeEntryButton.setAttribute("class", "remove-button");
+    removeEntryButton.textContent = "Remove Entry";
+    removeEntryButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.target.closest("div.book-card").remove();
+});
+    bookCard.appendChild(removeEntryButton);
+    };
 };
 
 //Constructor
 function Book (title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+    this.Title = title;
+    this.Author = author;
+    this.Pages = pages;
+    this.Read = read;
 };
 
 function addBookToLibrary() {
     if (radioBtnYes.checked) {
-        myLibrary.push(new Book(title.value, author.value, pages.value, "read"));
+        myLibrary.push(new Book(title.value, author.value, pages.value, "Read"));
     } else {
-        myLibrary.push(new Book(title.value, author.value, pages.value, "not read yet"));
+        myLibrary.push(new Book(title.value, author.value, pages.value, "Not Read Yet"));
     }
 };
 
