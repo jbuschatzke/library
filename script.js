@@ -17,18 +17,18 @@ const myLibrary = [
 
 const cardContainer = document.getElementById("card-container");
 
-//create a Remove Entry button
-
-
 //Iterate through each object of myLibrary
+
+let i = 0; //initialize a tracking variable for dataset-index to match myLibrary object indices
 
 function displayLibrary() 
 
     {for (const objIndex of myLibrary) {
-
     //create div with class book-card to display the contents of each object
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
+    bookCard.setAttribute("dataset-index", i)
+    i++;
     cardContainer.appendChild(bookCard);
 
     //create a list to hold each attribute of the array objects
@@ -45,14 +45,14 @@ function displayLibrary()
     //attach list to the previously created bookCard div
     bookCard.appendChild(list);
     //create Remove Entry button that will target it's closest div.book-card to delete
-    
+
     const removeEntryButton = document.createElement("button");
     removeEntryButton.setAttribute("class", "remove-button");
     removeEntryButton.textContent = "Remove Entry";
     removeEntryButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.target.closest("div.book-card").remove();
-});
+        console.log(e.target.closest("div.book-card").getAttribute("dataset-index"));
+        e.target.closest("div.book-card").remove();
+    });
     bookCard.appendChild(removeEntryButton);
     };
 };
@@ -68,8 +68,10 @@ function Book (title, author, pages, read) {
 function addBookToLibrary() {
     if (radioBtnYes.checked) {
         myLibrary.push(new Book(title.value, author.value, pages.value, "Read"));
+        i = 0;
     } else {
         myLibrary.push(new Book(title.value, author.value, pages.value, "Not Read Yet"));
+        i = 0;
     }
 };
 
