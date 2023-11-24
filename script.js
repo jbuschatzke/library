@@ -50,7 +50,8 @@ function displayLibrary()
     removeEntryButton.setAttribute("class", "remove-button");
     removeEntryButton.textContent = "Remove Entry";
     removeEntryButton.addEventListener("click", (e) => {
-        console.log(e.target.closest("div.book-card").getAttribute("dataset-index"));
+        let indexTarget = e.target.closest("div.book-card").getAttribute("dataset-index");
+        myLibrary.splice(indexTarget, 1);
         e.target.closest("div.book-card").remove();
     });
     bookCard.appendChild(removeEntryButton);
