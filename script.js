@@ -20,6 +20,8 @@ const cardContainer = document.getElementById("card-container");
 //Iterate through each object of myLibrary
 
 let i = 0; //initialize a tracking variable for dataset-index to match myLibrary object indices
+let targetBook;
+let indexTarget;
 
 function displayLibrary() 
 
@@ -37,24 +39,38 @@ function displayLibrary()
 
     //append each key item per objIndex as a list item
     for (const key in objIndex) {
+        if (objIndex.hasOwnProperty(key)){
         const liEelement = document.createElement("li");
         liEelement.innerText = `${key}: ${objIndex[key]}`;
         list.appendChild(liEelement);
-    }
+        }
+    };
 
     //attach list to the previously created bookCard div
     bookCard.appendChild(list);
-    //create Remove Entry button that will target it's closest div.book-card to delete
 
+    //create Remove Entry button that will target it's closest div.book-card to delete
     const removeEntryButton = document.createElement("button");
     removeEntryButton.setAttribute("class", "remove-button");
     removeEntryButton.textContent = "Remove Entry";
     removeEntryButton.addEventListener("click", (e) => {
         let indexTarget = e.target.closest("div.book-card").getAttribute("dataset-index");
-        myLibrary.splice(indexTarget, 1);
+        myLibrary.splice(indexTarget, 1)
         e.target.closest("div.book-card").remove();
     });
     bookCard.appendChild(removeEntryButton);
+
+    //create button to change read or not read yet
+
+    const changeReadButton = document.createElement("button");
+    changeReadButton.setAttribute("class", "change-read-button");
+    changeReadButton.textContent = "Read/Not Read";
+    changeReadButton.addEventListener("click", (e) => {
+        indexTarget = e.target.closest("div.book-card").getAttribute("dataset-index");
+        targetBook = myLibrary[indexTarget];
+        targetBook.changeRead();
+    });
+    bookCard.appendChild(changeReadButton);
     };
 };
 
@@ -64,6 +80,21 @@ function Book (title, author, pages, read) {
     this.Author = author;
     this.Pages = pages;
     this.Read = read;
+};
+
+Book.prototype.changeRead = function() {
+    if (this.Read === "Read") {
+        this.Read = "Not Read Yet";
+        document.querySelectorAll(".book-card").forEach(el => el.remove());
+        i = 0;
+        displayLibrary();
+        console.log("I work");
+    } else if (this.Read === "Not Read Yet") {
+        this.Read = "Read";
+        document.querySelectorAll(".book-card").forEach(el => el.remove());
+        i = 0;
+        displayLibrary();
+    }
 };
 
 function addBookToLibrary() {
