@@ -48,6 +48,7 @@ function displayLibrary()
     //dynamically set button text
     if (myLibrary[buttonContainer.parentNode.getAttribute("dataset-index")].Read === "Read"){
         changeReadButton.textContent = "Read";
+        changeReadButton.style.backgroundColor = "#87c712";
     } else {
         changeReadButton.textContent = "Not Read";
     };
