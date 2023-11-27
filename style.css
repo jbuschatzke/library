@@ -58,7 +58,6 @@ body {
 
 .book-card{
     display: grid;
-    grid-template-columns: 3fr 1fr;
     font-size: 18px;
     gap: 6px;
     background-color: #d9d7d7;
@@ -91,6 +90,7 @@ body {
     background-color: #701a14;
     color: #edfcee;
     border-radius: 50%;
+    margin-left: 4px;
 }
 
 
