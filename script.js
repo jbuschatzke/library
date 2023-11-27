@@ -1,19 +1,4 @@
-const myLibrary = [
-    {
-        "Title": "Good Omens",
-        "Author": "Terry Pratchett and Neil Gaiman",
-        "Pages": 400,
-        "Read": "not read yet",
-    }
-    ,
-    {
-        "Title": "Twilight",
-        "Author": "Stephenie Meyer",
-        "Pages": 544,
-        "Read": "read",
-    }
-    
-];
+const myLibrary = [];
 
 const cardContainer = document.getElementById("card-container");
 
@@ -40,38 +25,63 @@ function displayLibrary()
     //append each key item per objIndex as a list item
     for (const key in objIndex) {
         if (objIndex.hasOwnProperty(key)){
-        const liEelement = document.createElement("li");
-        liEelement.innerText = `${key}: ${objIndex[key]}`;
-        list.appendChild(liEelement);
+            if (key != "Read") {
+            const liEelement = document.createElement("li");
+            liEelement.innerText = `${key}: ${objIndex[key]}`;
+            list.appendChild(liEelement);
+            }
         }
     };
 
     //attach list to the previously created bookCard div
     bookCard.appendChild(list);
 
-    //create Remove Entry button that will target it's closest div.book-card to delete
-    const removeEntryButton = document.createElement("button");
-    removeEntryButton.setAttribute("class", "remove-button");
-    removeEntryButton.textContent = "Remove Entry";
-    removeEntryButton.addEventListener("click", (e) => {
-        let indexTarget = e.target.closest("div.book-card").getAttribute("dataset-index");
-        myLibrary.splice(indexTarget, 1)
-        e.target.closest("div.book-card").remove();
-    });
-    bookCard.appendChild(removeEntryButton);
+
+    let buttonContainer = document.createElement("div");
+    buttonContainer.setAttribute("class", "button-container");
+    bookCard.appendChild(buttonContainer);
 
     //create button to change read or not read yet
 
     const changeReadButton = document.createElement("button");
     changeReadButton.setAttribute("class", "change-read-button");
-    changeReadButton.textContent = "Read/Not Read";
+    //dynamically set button text
+    if (myLibrary[buttonContainer.parentNode.getAttribute("dataset-index")].Read === "Read"){
+        changeReadButton.textContent = "Read";
+    } else {
+        changeReadButton.textContent = "Not Read";
+    };
     changeReadButton.addEventListener("click", (e) => {
         indexTarget = e.target.closest("div.book-card").getAttribute("dataset-index");
         targetBook = myLibrary[indexTarget];
         targetBook.changeRead();
     });
-    bookCard.appendChild(changeReadButton);
+    buttonContainer.appendChild(changeReadButton);
+
+    //create Remove Entry button that will target it's closest div.book-card to delete
+    const removeEntryButton = document.createElement("button");
+    removeEntryButton.setAttribute("class", "remove-button");
+    removeEntryButton.textContent = "X";
+    removeEntryButton.addEventListener("click", (e) => {
+        let indexTarget = e.target.closest("div.book-card").getAttribute("dataset-index");
+        myLibrary.splice(indexTarget, 1)
+        e.target.closest("div.book-card").remove();
+        //reprint library with fresh dataset-indexes
+        document.querySelectorAll(".book-card").forEach(el => el.remove());
+        i = 0;
+        displayLibrary();
+    });
+    bookCard.prepend(removeEntryButton);
     };
+
+    let emptyMessage = document.createElement("div");
+    emptyMessage.setAttribute("class", "empty-message");
+    emptyMessage.textContent = "Click the 'Add Book To Library' button at the top of the page to add a book to your library!";
+    if (myLibrary.length == 0) {
+        cardContainer.appendChild(emptyMessage);
+    } else if (myLibrary.length > 0) {
+        document.querySelectorAll(".empty-message").forEach(el => el.remove());
+    }
 };
 
 //Constructor
@@ -88,7 +98,6 @@ Book.prototype.changeRead = function() {
         document.querySelectorAll(".book-card").forEach(el => el.remove());
         i = 0;
         displayLibrary();
-        console.log("I work");
     } else if (this.Read === "Not Read Yet") {
         this.Read = "Read";
         document.querySelectorAll(".book-card").forEach(el => el.remove());
